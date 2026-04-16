@@ -61,18 +61,6 @@ body {
     height: 80px;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-.logo i {
-    font-size: 1.8rem;
-}
 
 .nav-menu {
     display: flex;
@@ -130,7 +118,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+background:
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),  /* 白色遮罩 40% */
+        linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
     overflow: hidden;
     padding-top: 80px;
@@ -830,5 +820,32 @@ body {
     .carousel-btn.next {
         right: 10px;
     }
+}
+
+/* Logo 区域 */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;           /* 图片和文字间距 */
+    text-decoration: none;  /* 如果是 a 标签 */
+}
+
+/* Logo 图片样式 */
+.logo-img {
+    height: 40px;           /* 控制图片高度 */
+    width: auto;            /* 宽度自适应 */
+    object-fit: contain;    /* 保持比例 */
+    transition: transform 0.3s;
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.05);  /* 悬停放大效果 */
+}
+
+/* 如果只用图片不要文字 */
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 }
