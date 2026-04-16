@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>守望者计划 - 大学生支教公益活动</title>
     <link rel="stylesheet" href="./css/style.css">
-    <!-- 引入字体图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -30,7 +29,7 @@
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="highlight">用青春守护</span>乡村教育
-            <br>
+                <br>
                 <span>用知识点亮</span>孩子未来
             </h1>
             <p class="hero-subtitle">守望者计划 · 大学生公益支教行动</p>
@@ -63,9 +62,7 @@
         <div class="container">
             <h2 class="section-title">核心项目</h2>
             <p class="section-subtitle">三大板块助力乡村教育振兴</p>
-
             <div class="projects-grid">
-                <!-- 支教模块 -->
                 <div class="project-card main-card">
                     <div class="card-icon">
                         <i class="fas fa-chalkboard-teacher"></i>
@@ -81,8 +78,6 @@
                         <a href="#activity" class="card-btn">了解详情</a>
                     </div>
                 </div>
-
-                <!-- 助农模块 -->
                 <div class="project-card">
                     <div class="card-icon green">
                         <i class="fas fa-seedling"></i>
@@ -98,8 +93,6 @@
                         <a href="javascript:alert('助农板块即将上线')" class="card-btn outline">即将上线</a>
                     </div>
                 </div>
-
-                <!-- 职教模块 -->
                 <div class="project-card">
                     <div class="card-icon orange">
                         <i class="fas fa-graduation-cap"></i>
@@ -143,9 +136,15 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-image"></i>
-                        <span>志愿者风采</span>
+                    <div class="carousel-container">
+                        <div class="carousel-wrapper" id="carouselWrapper"></div>
+                        <button class="carousel-btn prev" id="prevBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn next" id="nextBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-dots" id="carouselDots"></div>
                     </div>
                 </div>
             </div>
@@ -158,7 +157,6 @@
             <div class="join-content">
                 <h2 class="section-title">加入我们</h2>
                 <p class="join-subtitle">如果你是在校大学生，有爱心、有耐心，愿意为乡村教育贡献一份力量</p>
-
                 <div class="join-cards">
                     <div class="join-card">
                         <div class="join-icon">
@@ -182,8 +180,7 @@
                             <li>难忘的公益经历</li>
                         </ul>
                     </div>
-                </div>
-                <div class="join-card">
+                    <div class="join-card">
                         <div class="join-icon">
                             <i class="fas fa-hand-holding-heart"></i>
                         </div>
@@ -195,12 +192,11 @@
                         </ul>
                     </div>
                 </div>
+                <a href="javascript:alert('报名通道即将开启，敬请关注！')" class="btn-primary join-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>立即报名</span>
+                </a>
             </div>
-
-            <a href="javascript:alert('报名通道即将开启，敬请关注！')" class="btn-primary join-btn">
-                <i class="fas fa-paper-plane"></i>
-                <span>立即报名</span>
-            </a>
         </div>
     </section>
 
@@ -216,7 +212,7 @@
                     <a href="mailto:shouwangzhe@example.com">
                         <i class="fas fa-envelope"></i>
                         <span>shouwangzhe@example.com</span>
-                    </a </a>
+                    </a>
                     <a href="#">
                         <i class="fab fa-weixin"></i>
                         <span>微信公众号</span>
@@ -231,7 +227,6 @@
         </div>
     </footer>
 
-    <!-- 返回顶部按钮 -->
     <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </a>
@@ -242,10 +237,10 @@
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
-            } } else {
+            } else {
                 navbar.classList.remove('scrolled');
             }
-        }
+        });
 
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -256,11 +251,12 @@
                     target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
-    });
-            }
+                    });
+                }
+            });
         });
 
-        // 返回顶部按钮显示/隐藏
+        // 返回顶部按钮
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', function() {
             if (window.scrollY > 300) {
@@ -277,6 +273,131 @@
                 behavior: 'smooth'
             });
         });
+
+        // 轮播图功能
+        const carouselModule = (function() {
+            const wrapper = document.getElementById('carouselWrapper');
+            const dotsContainer = document.getElementById('carouselDots');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            // 在这里列出 images/gallery/ 文件夹下的所有图片文件名
+            const imageFiles = [
+                '1.jpg',
+                '2.jpg',
+                '3.jpg',
+                '4.jpg',
+                '5.jpg'
+            ];
+
+            // 自动生成完整路径
+            const images = imageFiles.map((file, index) => ({
+                src: `./images/gallery/${file}`,
+                caption: `志愿者风采 ${index + 1}`
+            }));
+
+            let currentIndex = 0;
+            let autoPlayInterval;
+            const autoPlayDelay = 4000;
+
+            function init() {
+                if (images.length === 0) {
+                    wrapper.innerHTML = '<div class="img-placeholder"><i class="fas fa-image"></i><span>请在 images/gallery/ 文件夹添加图片</span></div>';
+                    return;
+                }
+                renderSlides();
+                renderDots();
+                startAutoPlay();
+                bindEvents();
+                console.log('轮播图初始化完成，图片数量：', images.length);
+            }
+
+            function renderSlides() {
+                wrapper.innerHTML = images.map((img, index) => `
+                    <div class="carousel-slide" data-index="${index}">
+                        <img src="${img.src}" alt="${img.caption}" onerror="handleImageError(this, ${index})">
+                        <div class="fallback img-placeholder" style="display:none">
+                            <i class="fas fa-image"></i>
+                            <span>图片 ${index + 1} 加载失败<br>路径：${img.src}</span>
+                        </div>
+                        <div class="carousel-caption">${img.caption}</div>
+                    </div>
+                `).join('');
+            }
+
+            // 图片加载失败处理
+            window.handleImageError = function(img, index) {
+                console.error('图片加载失败：', img.src);
+                img.style.display = 'none';
+                img.parentElement.querySelector('.fallback').style.display = 'flex';
+            };
+
+            function renderDots() {
+                dotsContainer.innerHTML = images.map((_, index) => `
+                    <div class="carousel-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></div>
+                `).join('');
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = images.length - 1;
+                if (index >= images.length) index = 0;
+
+                currentIndex = index;
+                wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            function nextSlide() {
+                goToSlide(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentIndex - 1);
+            }
+
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+            }
+
+            function stopAutoPlay() {
+                clearInterval(autoPlayInterval);
+            }
+
+            function resetAutoPlay() {
+                stopAutoPlay();
+                startAutoPlay();
+            }
+
+            function bindEvents() {
+                prevBtn.addEventListener('click', () => {
+                    prevSlide();
+                    resetAutoPlay();
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    nextSlide();
+                    resetAutoPlay();
+                });
+
+                dotsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('carousel-dot')) {
+                        goToSlide(parseInt(e.target.dataset.index));
+                        resetAutoPlay();
+                    }
+                });
+
+                wrapper.addEventListener('mouseenter', stopAutoPlay);
+                wrapper.addEventListener('mouseleave', startAutoPlay);
+            }
+
+            return { init };
+        })();
+
+        // 页面加载完成后初始化轮播
+        document.addEventListener('DOMContentLoaded', carouselModule.init);
     </script>
 </body>
 </html>

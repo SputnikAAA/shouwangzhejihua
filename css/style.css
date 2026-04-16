@@ -685,4 +685,150 @@ body {
         font-size: 2rem;
     }
     }
+/* 轮播容器 */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 图片加载失败时的占位 */
+.carousel-slide .img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f3f4ff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    gap: 15px;
+}
+
+.carousel-slide .img-placeholder i {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+/* 左右切换按钮 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--primary);
+    transition: all 0.3s;
+    opacity: 0;
+    z-index: 10;
+}
+
+.carousel-container:hover .carousel-btn {
+    opacity: 1;
+}
+
+.carousel-btn:hover {
+    background: var(--white);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+/* 指示器 */
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.carousel-dot.active {
+    background: var(--white);
+    transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+    background: var(--white);
+}
+
+/* 图片标题覆盖层 */
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: var(--white);
+    padding: 40px 20px 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 968px) {
+    .carousel-btn {
+        opacity: 1;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .carousel-btn.prev {
+        left: 10px;
+    }
+
+    .carousel-btn.next {
+        right: 10px;
+    }
+}
 }
